@@ -9,7 +9,7 @@ const app = new cdk.App();
 new PipelineStack(app, 'ServerlessTodoApi-PipelineStack', {
     repositoryName: "serverless-todo-api",
     branchName: "main",
-    ownerName: "nmoutschen"
+    ownerName: "flochaz"
 });
 
 const domainName = app.node.tryGetContext("domainName");

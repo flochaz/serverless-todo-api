@@ -16,7 +16,7 @@ const domainName = app.node.tryGetContext("domainName");
 
 // Implement Infra Stage for developer environment
 new InfraStage(app, 'ServerlessTodoApi-Dev', {
-    domainName: domainName ? domainName : 'fr-houes',
+    domainName: domainName ? domainName : 'flochaz',
     callbackUrls: ['http://localhost', 'http://localhost:3000'],
     env: {
         account: process.env.CDK_DEFAULT_ACCOUNT,

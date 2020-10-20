@@ -13,6 +13,7 @@ export class InfraStage extends Stage {
   public readonly userPoolDomain: CfnOutput;
   public readonly userPoolAppClientId: CfnOutput;
   public readonly restApiId: CfnOutput;
+  public readonly restApiEndpoint: CfnOutput;
 
   constructor(scope: Construct, id: string, props: PipelineStageProps) {
     super(scope, id, props);
@@ -29,5 +30,6 @@ export class InfraStage extends Stage {
     this.userPoolAppClientId = infraStack.userPoolAppClientId;
     this.userPoolDomain = infraStack.userPoolDomain;
     this.restApiId = infraStack.restApiId;
+    this.restApiEndpoint = infraStack.restApiEndpoint;
   }
 }

@@ -1,5 +1,5 @@
 import {App, SecretValue, Stack, StackProps} from '@aws-cdk/core';
-import {CdkPipeline, SimpleSynthAction} from '@aws-cdk/pipelines';
+import {CdkPipeline, SimpleSynthAction, ShellScriptAction} from '@aws-cdk/pipelines';
 import { InfraStage } from './infra-stage';
 import {GitHubSourceAction, GitHubTrigger} from '@aws-cdk/aws-codepipeline-actions';
 import { Artifact } from '@aws-cdk/aws-codepipeline';
@@ -45,10 +45,25 @@ export class PipelineStack extends Stack {
       })
     });
 
-    // Beta Stage
-    pipeline.addApplicationStage(new InfraStage(this, 'ServerlessTodoApi-Beta', {
+    const infraStage = new InfraStage(this, 'ServerlessTodoApi-Beta', {
       domainName: 'todo-beta',
       callbackUrls: [ 'http://localhost:3000' ]
-    }));
+    })
+    // Beta Stage
+    const beta = pipeline.addApplicationStage(infraStage);
+
+    beta.addActions(new ShellScriptAction({
+      actionName: 'TestUsingBuildArtifact',
+      useOutputs: {
+        // When the test is executed, this will make $URL contain the
+        // load balancer address.
+        URL: pipeline.stackOutput(infraStage.restApiEndpoint),
+      },
+      additionalArtifacts: [sourceArtifact],
+      // 'test.js' was produced from 'test/test.ts' during the synth step
+      commands: ['make integ-test'],
+    })
+
+    );    
   }
 }

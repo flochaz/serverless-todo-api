@@ -21,6 +21,7 @@ export class InfraStack extends cdk.Stack {
   public readonly userPoolAppClientId: CfnOutput;
   public readonly authRoleArn: CfnOutput;
   public readonly unauthRoleArn: CfnOutput;
+  public readonly restApiEndpoint: CfnOutput;
 
   public readonly restApiId: CfnOutput;
 
@@ -198,6 +199,10 @@ export class InfraStack extends cdk.Stack {
 
     this.restApiId = new CfnOutput(this, 'restApiId', {
       value: api.restApiId
+    });
+
+    this.restApiEndpoint = new CfnOutput(this, 'restApiEndpoint', {
+      value: api.urlForPath()
     });
 
     this.userPoolId = new CfnOutput(this, 'userPoolId', {

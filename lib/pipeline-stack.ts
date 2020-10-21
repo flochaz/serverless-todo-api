@@ -9,6 +9,7 @@ interface PipelineStackProps extends StackProps {
   readonly repositoryName: string;
   readonly ownerName: string;
   readonly branchName: string;
+  readonly domainName: string;
 }
 
 export class PipelineStack extends Stack {
@@ -46,7 +47,7 @@ export class PipelineStack extends Stack {
     });
 
     const infraStage = new InfraStage(this, 'ServerlessTodoApi-Beta', {
-      domainName: 'todo-beta',
+      domainName: props.domainName,
       callbackUrls: [ 'http://localhost:3000' ]
     })
     // Beta Stage

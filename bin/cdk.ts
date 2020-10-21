@@ -5,14 +5,15 @@ import { PipelineStack } from '../lib/pipeline-stack';
 import {InfraStage} from "../lib/infra-stage";
 
 const app = new cdk.App();
+const domainName = app.node.tryGetContext("domainName");
 
 new PipelineStack(app, 'ServerlessTodoApi-PipelineStack', {
     repositoryName: "serverless-todo-api",
     branchName: "main",
-    ownerName: "flochaz"
+    ownerName: "flochaz",
+    domainName: domainName ? domainName : 'flochaz-modernapp',
 });
 
-const domainName = app.node.tryGetContext("domainName");
 
 // Implement Infra Stage for developer environment
 new InfraStage(app, 'ServerlessTodoApi-Dev', {

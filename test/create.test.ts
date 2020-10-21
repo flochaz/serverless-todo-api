@@ -16,6 +16,7 @@ if (!AWS.config.credentials) {
     }
 }
 
+console.log(`creds: ${JSON.stringify(AWS.config.credentials)}`);
 
 test('create todo', async () => {
 

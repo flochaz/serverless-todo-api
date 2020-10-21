@@ -39,7 +39,8 @@ test:
 .PHONY: test
 
 test-integ:
-	npm run test
+	TODO_API_ENDPOINT=$(shell aws cloudformation describe-stacks --stack-name ServerlessTodoApi-Beta-ServerlessTodoApi-Infra --query "Stacks[0].Outputs[?OutputKey=='restApiEndpoint'].OutputValue" --output text) npm run test
+
 
 install-python: .venv
 	.venv/bin/pip install -e ./lib/todo-api

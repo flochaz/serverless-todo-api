@@ -6,14 +6,10 @@ import { aws4Interceptor } from 'aws4-axios';
 const apiEndpoint = process.env.TODO_API_ENDPOINT;
 
 test('get all todos', async () => {
-  const credentials = new AWS.SharedIniFileCredentials();
 
   const interceptor = aws4Interceptor({
     region: 'eu-west-1',
     service: 'execute-api'
-  }, {
-    accessKeyId: credentials.accessKeyId,
-    secretAccessKey: credentials.secretAccessKey
   });
   
   axios.interceptors.request.use(interceptor);

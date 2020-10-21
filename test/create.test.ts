@@ -6,13 +6,13 @@ import { aws4Interceptor } from 'aws4-axios';
 const apiEndpoint = process.env.TODO_API_ENDPOINT;
 
 if (!AWS.config.credentials) {
-  console.log('try to get creds from EC2MetadataCredentials');
-    AWS.config.credentials = new AWS.EC2MetadataCredentials({ httpOptions: {timeout: 5000} });
+  console.log('try to get creds from ECSCredentials');
+    AWS.config.credentials = new AWS.ECSCredentials({
+      httpOptions: {timeout: 5000}, // 5 second timeout
+  });
     if (!AWS.config.credentials) {
-      console.log('try to get creds from ECSCredentials');
-      new AWS.ECSCredentials({
-        httpOptions: {timeout: 5000}, // 5 second timeout
-    });
+      console.log('try to get creds from EC2MetadataCredentials');
+      new AWS.EC2MetadataCredentials({ httpOptions: {timeout: 5000} });
     }
 }
 

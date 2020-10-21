@@ -9,7 +9,12 @@ test('create todo', async () => {
 
   const interceptor = aws4Interceptor({
     region: 'eu-west-1',
-    service: 'execute-api'
+    service: 'execute-api',
+  },
+  {
+    secretAccessKey: AWS.config.credentials.secretAccessKey,
+    accessKeyId: AWS.config.credentials.accessKeyId,
+    sessionToken: AWS.config.credentials.sessionToken
   });
   
   axios.interceptors.request.use(interceptor);

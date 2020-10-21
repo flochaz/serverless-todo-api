@@ -3,6 +3,7 @@ import {CdkPipeline, SimpleSynthAction, ShellScriptAction} from '@aws-cdk/pipeli
 import { InfraStage } from './infra-stage';
 import {GitHubSourceAction, GitHubTrigger} from '@aws-cdk/aws-codepipeline-actions';
 import { Artifact } from '@aws-cdk/aws-codepipeline';
+import { PolicyStatement } from '@aws-cdk/aws-iam';
 import {LinuxBuildImage} from "@aws-cdk/aws-codebuild";
 
 interface PipelineStackProps extends StackProps {
@@ -60,9 +61,15 @@ export class PipelineStack extends Stack {
         // load balancer address.
         TODO_API_ENDPOINT: pipeline.stackOutput(infraStage.restApiEndpoint),
       },
+      rolePolicyStatements: [
+        new PolicyStatement({
+          actions: ['execute-api:Invoke'],
+          resources: ['arn:aws:execute-api:*:*:*'],
+        }),
+      ],
       additionalArtifacts: [sourceArtifact],
       // 'test.js' was produced from 'test/test.ts' during the synth step
-      commands: ['echo $TODO_API_ENDPOINT','npm install', 'npm run test'],
+      commands: ['npm install', 'npm run test'],
     })
 
     );    

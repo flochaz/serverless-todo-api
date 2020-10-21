@@ -58,11 +58,11 @@ export class PipelineStack extends Stack {
       useOutputs: {
         // When the test is executed, this will make $URL contain the
         // load balancer address.
-        URL: pipeline.stackOutput(infraStage.restApiEndpoint),
+        TODO_API_ENDPOINT: pipeline.stackOutput(infraStage.restApiEndpoint),
       },
       additionalArtifacts: [sourceArtifact],
       // 'test.js' was produced from 'test/test.ts' during the synth step
-      commands: ['make integ-test'],
+      commands: ['echo $TODO_API_ENDPOINT','npm install', 'npm run test'],
     })
 
     );    
